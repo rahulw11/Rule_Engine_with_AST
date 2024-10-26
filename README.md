@@ -1,4 +1,4 @@
-6# Rule_Engine_with_AST
+# Rule_Engine_with_AST
 
 This project is a 3-tier rule engine application that determines user eligibility based on various attributes (e.g., age, department, income, experience). It uses an Abstract Syntax Tree (AST) to represent and evaluate conditional rules and provides a RESTful API to create, combine, and evaluate these rules dynamically.
 
