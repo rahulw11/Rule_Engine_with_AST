@@ -39,7 +39,7 @@ Run the Application:
 
 Access the Application:
 
-    Open your browser and go to http://localhost:5000.
+    Open your browser and go to (http://127.0.0.1:5000).
     Use Postman or similar tools to interact with the API directly.
 
 Snapshots of OUTPUT:
