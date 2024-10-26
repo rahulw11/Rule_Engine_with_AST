@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rule Engine</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #ffffff;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 600px;
+            width: 100%;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        h2 {
+            color: #555;
+            margin-bottom: 10px;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        p {
+            text-align: center;
+            font-size: 16px;
+            color: #666;
+        }
+
+        #create-status, #eval-result {
+            font-weight: bold;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Rule Engine Application</h1>
+
+        <h2>Create a Rule</h2>
+        <input type="text" id="rule-input" placeholder="Enter rule string (e.g., age > 30 AND salary > 50000)">
+        <button onclick="createRule()">Create Rule</button>
+        <p id="create-status"></p>
+
+        <h2>Evaluate Rule</h2>
+        <input type="number" id="rule-id" placeholder="Enter rule ID">
+        <textarea id="user-data" placeholder='e.g.,{"age": 35, "salary": 60000}' rows="4"></textarea>
+        <button onclick="evaluateRule()">Evaluate Rule</button>
+        <p id="eval-result"></p>
+    </div>
+
+    <script>
+        function createRule() {
+            const rule = document.getElementById('rule-input').value;
+            fetch('/create_rule', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({rule})
+            })
+            .then(response => response.json())
+            .then(data => document.getElementById('create-status').innerText = data.message);
+        }
+
+        async function evaluateRule() {
+            const rule_id = document.getElementById('rule_id_eval').value;
+            // Parse input from user and ensure double quotes for strings
+            let userDataInput = document.getElementById('user_data').value;
+            userDataInput = userDataInput.replace(/'/g, '"'); // Replace single quotes with double quotes
+            const user_data = JSON.parse(userDataInput);
+            
+            const response = await fetch(`/evaluate_rule/${rule_id}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ user_data })
+            });
+            const data = await response.json();
+            document.getElementById('output').innerText = 'Evaluation Result: ' + data.result;
+        }
+        
+    </script>
+</body>
+</html>
