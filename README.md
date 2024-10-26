@@ -35,4 +35,6 @@ Access the Application:
     Open your browser and go to http://localhost:5000.
     Use Postman or similar tools to interact with the API directly.
 
+Snapshots of OUTPUT:
+
 ![Engine_rule](https://github.com/user-attachments/assets/d1de4a00-df00-4bac-96d8-183a9e48a0c4)
